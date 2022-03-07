@@ -1,25 +1,16 @@
-const getDayInfo = date => {
-  const months = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря',
-  ]
+const capitalize = str => str[0].toUpperCase() + str.slice(1)
 
-  const yourDate = new Date(date)
-  const day = yourDate.getDate()
-  const month = yourDate.getMonth()
-  const year = yourDate.getFullYear()
-  const result = `${day}, ${months[month]} ${year} года`
-  console.log(result)
+const getDayInfo = date => {
+  const [day, month, year] = date.split('.').map(Number)
+  const outDate = new Date(year, month - 1, day)
+  const week = Math.ceil(day / 7)
+
+  const [monthName, weekDayName] = outDate
+    .toLocaleDateString('ru', { weekday: 'long', month: 'long' })
+    .split(' ')
+    .map(capitalize)
+
+  return console.log(`${weekDayName}, ${week} неделя ${monthName} ${year} года`)
 }
 
 getDayInfo('01.01.2022')
